@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>靈魂座標 · 線上迷你體驗｜報名</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#141d18;
+    --ink-soft:#1d2a23;
+    --sage-deep:#3f5447;
+    --sage:#6f8676;
+    --sage-line:#9bae9f;
+    --cream:#f3eee2;
+    --paper:#faf7ee;
+    --brass:#c5a35e;
+    --brass-soft:#d9c08a;
+    --text:#2a302b;
+    --text-soft:#5a6258;
+    --rule:rgba(63,84,71,.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:"Noto Sans TC",system-ui,sans-serif;
+    color:var(--text);
+    background:var(--cream);
+    line-height:1.75;
+    font-weight:300;
+    letter-spacing:.01em;
+  }
+  .wrap{max-width:560px;margin:0 auto;background:var(--paper)}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:radial-gradient(120% 90% at 50% -10%, #25342b 0%, var(--ink) 60%, #0e1511 100%);
+    color:var(--cream);
+    padding:62px 30px 54px;
+    overflow:hidden;
+    text-align:center;
+  }
+  .grid-bg{
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(155,174,159,.10) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(155,174,159,.10) 1px, transparent 1px);
+    background-size:34px 34px;
+    mask-image:radial-gradient(circle at 50% 38%, #000 30%, transparent 78%);
+    -webkit-mask-image:radial-gradient(circle at 50% 38%, #000 30%, transparent 78%);
+  }
+  .stars{position:absolute;inset:0;pointer-events:none}
+  .star{position:absolute;width:2px;height:2px;border-radius:50%;background:var(--brass-soft);opacity:.55}
+  .coord{position:relative;width:128px;height:128px;margin:0 auto 26px}
+  .coord svg{display:block;width:100%;height:100%;overflow:visible}
+  .axis{stroke:rgba(155,174,159,.35);stroke-width:1}
+  .ring{fill:none;stroke:rgba(197,163,94,.35);stroke-width:1}
+  .plot{fill:var(--brass)}
+  .pulse{fill:none;stroke:var(--brass);stroke-width:1.2;transform-origin:center}
+  @keyframes ping{0%{r:5;opacity:.9}70%{r:30;opacity:0}100%{opacity:0}}
+  @keyframes glow{0%,100%{opacity:.55}50%{opacity:1}}
+  .pulse{animation:ping 3.4s ease-out infinite}
+  .plot{animation:glow 3.4s ease-in-out infinite}
+  .eyebrow{
+    font-family:"Cormorant Garamond",serif;
+    font-style:italic;
+    letter-spacing:.18em;
+    font-size:15px;
+    color:var(--brass-soft);
+    margin-bottom:14px;
+  }
+  .hero h1{
+    font-family:"Noto Serif TC",serif;
+    font-weight:500;
+    font-size:27px;
+    letter-spacing:.04em;
+    line-height:1.5;
+  }
+  .hero h1 .bracket{color:var(--brass-soft)}
+  .hero .sub{
+    margin-top:18px;
+    font-size:14.5px;
+    font-weight:300;
+    color:rgba(243,238,226,.82);
+    line-height:1.9;
+    max-width:380px;
+    margin-left:auto;margin-right:auto;
+  }
+
+  /* ---------- BODY ---------- */
+  .section{padding:38px 30px}
+  .section + .section{border-top:1px solid var(--rule)}
+  .label{
+    font-family:"Cormorant Garamond",serif;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    font-size:12px;
+    color:var(--sage);
+    display:flex;align-items:center;gap:10px;
+    margin-bottom:18px;
+  }
+  .label::after{content:"";flex:1;height:1px;background:var(--rule)}
+  .lead{font-size:14.5px;color:var(--text-soft);line-height:1.95}
+
+  .includes{list-style:none;margin-top:8px}
+  .includes li{
+    position:relative;padding:14px 0 14px 30px;
+    border-bottom:1px dashed var(--rule);
+    font-size:15px;color:var(--text);
+  }
+  .includes li:last-child{border-bottom:none}
+  .includes li::before{
+    content:"";position:absolute;left:6px;top:21px;
+    width:7px;height:7px;border-radius:50%;
+    background:var(--brass);box-shadow:0 0 0 4px rgba(197,163,94,.16);
+  }
+  .includes .note{display:block;font-size:13px;color:var(--text-soft);margin-top:2px}
+
+  .fee{
+    text-align:center;padding:30px 24px;
+    background:linear-gradient(180deg,#2a3a30,#1d2a23);
+    color:var(--cream);border-radius:14px;margin-top:4px;
+  }
+  .fee .amt{
+    font-family:"Cormorant Garamond",serif;
+    font-size:46px;line-height:1;color:var(--brass-soft);
+    letter-spacing:.02em;
+  }
+  .fee .cur{font-size:15px;letter-spacing:.2em;color:rgba(243,238,226,.7);display:block;margin-bottom:8px;font-family:"Cormorant Garamond",serif}
+  .fee .desc{font-size:13.5px;color:rgba(243,238,226,.78);margin-top:8px}
+
+  .bank{margin-top:22px;border:1px solid var(--rule);border-radius:14px;overflow:hidden}
+  .bank-row{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;font-size:14.5px;border-bottom:1px solid var(--rule);gap:14px}
+  .bank-row:last-child{border-bottom:none}
+  .bank-row .k{color:var(--text-soft);white-space:nowrap}
+  .bank-row .v{font-weight:500;text-align:right;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+  .v.copyable{display:flex;align-items:center;gap:10px;justify-content:flex-end}
+  .copy-btn{
+    font-family:"Noto Sans TC",sans-serif;font-size:12px;font-weight:500;letter-spacing:.08em;
+    color:var(--sage-deep);background:rgba(111,134,118,.12);
+    border:1px solid var(--rule);border-radius:7px;padding:5px 12px;cursor:pointer;
+    transition:background .2s,color .2s,border-color .2s;white-space:nowrap;
+  }
+  .copy-btn:hover{background:rgba(111,134,118,.22)}
+  .copy-btn.copied{background:var(--sage-deep);color:var(--cream);border-color:var(--sage-deep)}
+  .bank-tip{font-size:13px;color:var(--text-soft);line-height:1.85;margin-top:14px;padding:0 2px}
+
+  /* ---------- FORM ---------- */
+  .field{margin-bottom:22px}
+  .field label{display:block;font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px}
+  .field label .req{color:var(--brass);margin-left:4px}
+  .field .hint{font-size:12.5px;color:var(--text-soft);margin-bottom:9px;line-height:1.7}
+  .field input,.field textarea{
+    width:100%;font-family:inherit;font-size:15px;font-weight:300;color:var(--text);
+    background:#fff;border:1px solid var(--rule);border-radius:10px;
+    padding:13px 15px;transition:border-color .2s,box-shadow .2s;
+  }
+  .field textarea{resize:vertical;min-height:84px}
+  .field input:focus,.field textarea:focus{
+    outline:none;border-color:var(--sage);
+    box-shadow:0 0 0 3px rgba(111,134,118,.16);
+  }
+  .field.invalid input,.field.invalid textarea{border-color:#b4533f;box-shadow:0 0 0 3px rgba(180,83,63,.13)}
+  .field .err{display:none;font-size:12.5px;color:#b4533f;margin-top:6px}
+  .field.invalid .err{display:block}
+
+  .submit{
+    width:100%;margin-top:6px;
+    font-family:"Noto Sans TC",sans-serif;font-size:16px;font-weight:500;letter-spacing:.08em;
+    color:var(--cream);
+    background:linear-gradient(180deg,#3f5447,#2a3a30);
+    border:none;border-radius:12px;padding:17px;cursor:pointer;
+    transition:transform .15s,box-shadow .2s,opacity .2s;
+    box-shadow:0 6px 18px rgba(20,29,24,.22);
+  }
+  .submit:hover{transform:translateY(-1px);box-shadow:0 9px 22px rgba(20,29,24,.28)}
+  .submit:active{transform:translateY(0)}
+  .submit:disabled{opacity:.6;cursor:wait;transform:none}
+  .form-foot{font-size:12px;color:var(--text-soft);text-align:center;margin-top:16px;line-height:1.8}
+
+  /* ---------- SUCCESS ---------- */
+  .done{display:none;text-align:center;padding:64px 32px}
+  .done.show{display:block}
+  .done .mark{width:72px;height:72px;margin:0 auto 24px}
+  .done .mark svg{width:100%;height:100%}
+  .done h2{font-family:"Noto Serif TC",serif;font-weight:500;font-size:23px;letter-spacing:.04em;color:var(--sage-deep);margin-bottom:14px}
+  .done p{font-size:14.5px;color:var(--text-soft);line-height:2;max-width:380px;margin:0 auto}
+  .done .small{font-size:12.5px;margin-top:22px;color:var(--sage)}
+
+  .credit{text-align:center;padding:28px 20px 38px;font-size:12px;color:var(--sage);letter-spacing:.06em}
+  .credit .mk{font-family:"Cormorant Garamond",serif;font-style:italic;letter-spacing:.18em}
+
+  @media (prefers-reduced-motion:reduce){
+    .pulse,.plot{animation:none}
+    .pulse{opacity:0}.plot{opacity:1}
+    .submit{transition:none}
+  }
+  @media(max-width:420px){
+    .hero{padding:54px 22px 46px}
+    .hero h1{font-size:24px}
+    .section{padding:34px 22px}
+    .bank-row{flex-direction:column;align-items:flex-start;gap:4px}
+    .bank-row .v{text-align:left}
+    .bank-row .v.copyable{justify-content:flex-start}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="grid-bg"></div>
+    <div class="stars" id="stars"></div>
+    <div class="coord">
+      <svg viewBox="0 0 128 128" aria-hidden="true">
+        <line class="axis" x1="64" y1="14" x2="64" y2="114"/>
+        <line class="axis" x1="14" y1="64" x2="114" y2="64"/>
+        <circle class="ring" cx="64" cy="64" r="42"/>
+        <circle class="ring" cx="64" cy="64" r="24" style="opacity:.6"/>
+        <circle class="pulse" cx="86" cy="48" r="5"/>
+        <circle class="plot" cx="86" cy="48" r="4.5"/>
+      </svg>
+    </div>
+    <div class="eyebrow">Soul Coordinate · Online</div>
+    <h1><span class="bracket">【</span>靈魂座標<span class="bracket">】</span>線上迷你體驗</h1>
+    <p class="sub">不受地點限制，隨時展開你的座標旅程。<br>透過靜心連結，Li Na 會先為你繪製專屬的靈魂座標圖騰；<br>完成後，再與 Lara 預約 40 分鐘線上解讀時間，<br>看見此刻靈魂想帶你前往的方向。</p>
+  </header>
+
+  <!-- 體驗內容 -->
+  <section class="section">
+    <div class="label">體驗內容 · Includes</div>
+    <ul class="includes">
+      <li>Li Na 手繪專屬個人靈魂座標（約五個工作天）
+      </li>
+      <li>Lara 一對一線上圖騰解讀（40 分鐘）
+        <span class="note">讀取圖騰承載的訊息，看見靈魂想帶你前往的方向。</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 費用與匯款 -->
+  <section class="section">
+    <div class="label">費用與匯款 · Payment</div>
+    <div class="fee">
+      <span class="cur">NT DOLLARS</span>
+      <span class="amt">2,000</span>
+      <p class="desc">完成匯款後，請於下方表單填寫帳戶後五碼。</p>
+    </div>
+    <div class="bank">
+      <div class="bank-row"><span class="k">銀行代碼</span><span class="v">700 · 郵局</span></div>
+      <div class="bank-row"><span class="k">帳號</span><span class="v copyable"><span id="acctNum">00415700152886</span><button type="button" class="copy-btn" id="copyAcct" aria-label="複製帳號">複製</button></span></div>
+      <div class="bank-row"><span class="k">戶名</span><span class="v">張家馨</span></div>
+    </div>
+    <p class="bank-tip">歡迎使用網路銀行或 ATM 轉帳。轉帳完成後，請於下方表單填寫帳戶後五碼，我們會加快為你對帳，謝謝你 ♡</p>
+  </section>
+
+  <!-- 報名表單 -->
+  <section class="section" id="formSection">
+    <div class="label">登機資料 · Sign Up</div>
+
+    <div class="field" data-name="name">
+      <label>真實姓名<span class="req">*</span></label>
+      <div class="hint">作為靜心連結與座標圖騰繪製使用。</div>
+      <input type="text" id="name" autocomplete="name" />
+      <div class="err">請填寫真實姓名</div>
+    </div>
+
+    <div class="field" data-name="ig">
+      <label>Instagram 帳號<span class="req">*</span></label>
+      <div class="hint">請填寫完整帳號（例：@your_account），方便 Li Na 私訊聯繫。</div>
+      <input type="text" id="ig" placeholder="@your_account" autocomplete="off" />
+      <div class="err">請填寫 IG 帳號</div>
+    </div>
+
+    <div class="field" data-name="line">
+      <label>LINE ID<span class="req">*</span></label>
+      <div class="hint">圖騰完成後，Lara 將透過 LINE 與你預約一對一線上解讀時間。</div>
+      <input type="text" id="line" autocomplete="off" />
+      <div class="err">請填寫 LINE ID</div>
+    </div>
+
+    <div class="field" data-name="email">
+      <label>電子信箱 Email<span class="req">*</span></label>
+      <div class="hint">用於寄送報名確認與檔案、重要通知。</div>
+      <input type="email" id="email" autocomplete="email" placeholder="you@example.com" />
+      <div class="err">請填寫正確的 Email</div>
+    </div>
+
+    <div class="field" data-name="last5">
+      <label>已匯款之帳戶後五碼<span class="req">*</span></label>
+      <div class="hint">請填寫你轉帳帳戶的後五碼，以便我們加快對帳速度。</div>
+      <input type="text" id="last5" inputmode="numeric" maxlength="5" placeholder="12345" />
+      <div class="err">請填寫 5 碼數字</div>
+    </div>
+
+    <div class="field" data-name="note">
+      <label>備註 / 想對我們說的話<span style="color:var(--text-soft);font-weight:300;margin-left:4px;font-size:13px">（選填）</span></label>
+      <textarea id="note" placeholder="任何想讓我們知道的事 ♡"></textarea>
+    </div>
+
+    <button class="submit" id="submitBtn">送出報名 · 展開座標旅程</button>
+    <p class="form-foot">送出後請留意 Email 與 IG 私訊，我們會盡快與你確認 ♡</p>
+  </section>
+
+  <!-- 完成畫面 -->
+  <section class="done" id="doneScreen">
+    <div class="mark">
+      <svg viewBox="0 0 72 72" aria-hidden="true">
+        <circle cx="36" cy="36" r="34" fill="none" stroke="#c5a35e" stroke-width="1.5" opacity=".5"/>
+        <circle cx="36" cy="36" r="3.5" fill="#c5a35e"/>
+        <path d="M22 37 l9 9 l19 -21" fill="none" stroke="#3f5447" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h2>座標已登錄 ✦</h2>
+    <p>謝謝你展開這趟旅程。<br>我們會盡快對帳，並透過 IG 私訊或 LINE 與你聯繫，<br>為你繪製專屬的靈魂座標圖騰。</p>
+    <p class="small">— 香氛癒 · 靈魂轉機站 —</p>
+  </section>
+
+  <div class="credit"><span class="mk">Soul Scent · Soul Transit Station</span></div>
+</div>
+
+<script>
+  /* ════════════════════════════════════════════════════════
+     ① 把你「部署 Apps Script 網頁應用程式」後拿到的網址貼到這裡
+     （目前是 PASTE_URL_HERE，貼上前頁面會以「預覽模式」運作，
+      只示範流程、不會真的寫進試算表）
+  ════════════════════════════════════════════════════════ */
+  const ENDPOINT = "dcIRNBdDgoFRap_MlELtQB4xOB687L9YnFTp4Fu9gR/exec";
+
+  /* 星點背景 */
+  (function(){
+    const box=document.getElementById('stars');
+    for(let i=0;i<26;i++){
+      const s=document.createElement('span');
+      s.className='star';
+      s.style.left=Math.random()*100+'%';
+      s.style.top=Math.random()*100+'%';
+      s.style.opacity=(0.2+Math.random()*0.5).toFixed(2);
+      s.style.transform='scale('+(0.6+Math.random()*1.4).toFixed(2)+')';
+      box.appendChild(s);
+    }
+  })();
+
+  const $ = id => document.getElementById(id);
+
+  /* 複製帳號 */
+  const copyBtn = $('copyAcct');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', async () => {
+      const num = $('acctNum').textContent.trim();
+      try {
+        await navigator.clipboard.writeText(num);
+      } catch (e) {
+        const t = document.createElement('textarea');
+        t.value = num; t.style.position = 'fixed'; t.style.opacity = '0';
+        document.body.appendChild(t); t.select();
+        try { document.execCommand('copy'); } catch (_) {}
+        document.body.removeChild(t);
+      }
+      copyBtn.textContent = '已複製 ✓';
+      copyBtn.classList.add('copied');
+      setTimeout(() => { copyBtn.textContent = '複製'; copyBtn.classList.remove('copied'); }, 1800);
+    });
+  }
+
+  function setInvalid(name, bad){
+    document.querySelector('.field[data-name="'+name+'"]').classList.toggle('invalid', bad);
+  }
+  ['name','ig','line','email','last5'].forEach(n=>{
+    $(n).addEventListener('input', ()=>setInvalid(n,false));
+  });
+
+  function validate(){
+    let ok=true;
+    const v = id => $(id).value.trim();
+    if(!v('name')){setInvalid('name',true);ok=false;}
+    if(!v('ig')){setInvalid('ig',true);ok=false;}
+    if(!v('line')){setInvalid('line',true);ok=false;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v('email'))){setInvalid('email',true);ok=false;}
+    if(!/^\d{5}$/.test(v('last5'))){setInvalid('last5',true);ok=false;}
+    return ok;
+  }
+
+  function showDone(){
+    $('formSection').style.display='none';
+    document.querySelectorAll('.section').forEach(s=>{ if(s.id!=='formSection') s.style.display='none'; });
+    document.querySelector('.hero').scrollIntoView({behavior:'smooth'});
+    $('doneScreen').classList.add('show');
+  }
+
+  $('submitBtn').addEventListener('click', async ()=>{
+    if(!validate()){
+      document.querySelector('.field.invalid')?.scrollIntoView({behavior:'smooth',block:'center'});
+      return;
+    }
+    const btn=$('submitBtn');
+    btn.disabled=true; btn.textContent='送出中…';
+
+    const payload={
+      name:$('name').value.trim(),
+      ig:$('ig').value.trim(),
+      line:$('line').value.trim(),
+      email:$('email').value.trim(),
+      last5:$('last5').value.trim(),
+      note:$('note').value.trim()
+    };
+
+    // 預覽模式：尚未貼上網址 → 只示範流程
+    if(ENDPOINT==="PASTE_URL_HERE"){
+      console.log('預覽模式，將送出的資料：', payload);
+      setTimeout(showDone, 700);
+      return;
+    }
+
+    try{
+      await fetch(ENDPOINT,{
+        method:'POST',
+        mode:'no-cors',
+        headers:{'Content-Type':'text/plain;charset=utf-8'},
+        body:JSON.stringify(payload)
+      });
+      showDone();
+    }catch(err){
+      btn.disabled=false; btn.textContent='送出報名 · 展開座標旅程';
+      alert('送出時連線出了點狀況，請稍後再試一次，或直接私訊我們 ♡');
+    }
+  });
+</script>
+</body>
+</html>
