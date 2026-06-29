@@ -227,6 +227,7 @@
     </div>
     <div class="eyebrow">Soul Coordinate · Online</div>
     <h1><span class="bracket">【</span>靈魂座標<span class="bracket">】</span>線上迷你體驗</h1>
+    <div style="font-size: 13px; color: var(--brass-soft); letter-spacing: 0.15em; margin-top: 6px; font-weight: 400;">Soul Scent 創辦人 Li Na  ×  Soular.a 導師 Lara 聯合帶來</div>
     <p class="sub">不受地點限制，隨時展開你的座標旅程<br>透過連結，Li Na 會先為你繪製專屬的靈魂座標圖騰<br>完成後，再與 Lara 預約 40 分鐘線上解讀時間<br>看見此刻靈魂想帶你前往的方向</p>
   </header>
 
@@ -235,10 +236,10 @@
     <div class="label">體驗內容 · Includes</div>
     <ul class="includes">
       <li>Li Na 手繪專屬個人靈魂座標（約5個工作天，不含國定假日）
-        <span class="note">下載你的源頭頻率封包，轉繪成圖騰</span>
+        <span class="note">下載你的源頭頻率封包，將無形能量轉繪為具象的導航地圖</span>
       </li>
       <li>Lara 一對一線上圖騰解讀（40 分鐘）
-        <span class="note">讀取圖騰承載的訊息，看見靈魂想帶你前往的方向</span>
+        <span class="note">讀取座標所錨定的能量，為你翻譯此刻生命藍圖的關鍵指引</span>
       </li>
     </ul>
   </section>
@@ -256,10 +257,10 @@
       <div class="bank-row"><span class="k">帳號</span><span class="v copyable"><span id="acctNum">00415700152886</span><button type="button" class="copy-btn" id="copyAcct" aria-label="複製帳號">複製</button></span></div>
       <div class="bank-row"><span class="k">戶名</span><span class="v">張家馨</span></div>
     </div>
-    <p class="bank-tip">轉帳完成後，請於下方表單填寫帳戶後五碼，並連繫官方Line:@pzg5277e，我們會盡快為你對帳，謝謝你 ♡</p>
+    <p class="bank-tip">轉帳完成後，請於下方表單填寫帳戶後五碼，並連蹟官方Line:@pzg5277e，我們會盡快為你對帳，謝謝你 ♡</p>
   </section>
 
-  <!-- 報名表單 -->
+  <!-- 報名表單 (已將 IG 欄位移除) -->
   <section class="section" id="formSection">
     <div class="label">登機資料 · Sign Up</div>
 
@@ -268,13 +269,6 @@
       <div class="hint">作為連結與座標圖騰繪製使用</div>
       <input type="text" id="name" autocomplete="name" />
       <div class="err">請填寫真實姓名</div>
-    </div>
-
-    <div class="field" data-name="ig">
-      <label>Instagram 帳號<span class="req">*</span></label>
-      <div class="hint">請填寫完整帳號（例：@your_account），方便 Li Na 私訊聯繫</div>
-      <input type="text" id="ig" placeholder="@your_account" autocomplete="off" />
-      <div class="err">請填寫 IG 帳號</div>
     </div>
 
     <div class="field" data-name="line">
@@ -304,10 +298,10 @@
     </div>
 
     <button class="submit" id="submitBtn">送出報名 · 展開座標旅程</button>
-    <p class="form-foot">送出後請留意 Email 與 IG 私訊，我們會盡快與你確認 ♡</p>
+    <p class="form-foot">送出後請留意 Email 與 LINE，我們會盡快與你確認 ♡</p>
   </section>
 
- <!-- 完成畫面 (已加入引導 LINE 按鈕與品牌聯名) -->
+  <!-- 完成畫面 -->
   <section class="done" id="doneScreen">
     <div class="mark">
       <svg viewBox="0 0 72 72" aria-hidden="true">
@@ -327,11 +321,9 @@
       <p id="copyTip" style="font-size: 12.5px; color: var(--sage); margin-top: 8px; font-weight: 400; min-height: 20px;"></p>
     </div>
 
-    <!-- 已修改為您與 LARA 的品牌聯名結尾 -->
     <p class="small">— Soul Scent × Soular.a —</p>
   </section>
 
-  <!-- 最底部的版權標記也同步更新 -->
   <div class="credit"><span class="mk">Soul Scent × Soular.a · Soul Coordinate Journey</span></div>
 </div>
 
@@ -380,7 +372,8 @@
   function setInvalid(name, bad){
     document.querySelector('.field[data-name="'+name+'"]').classList.toggle('invalid', bad);
   }
-  ['name','ig','line','email','last5'].forEach(n=>{
+  /* 驗證欄位已同步移除 ig */
+  ['name','line','email','last5'].forEach(n=>{
     $(n).addEventListener('input', ()=>setInvalid(n,false));
   });
 
@@ -388,7 +381,6 @@
     let ok=true;
     const v = id => $(id).value.trim();
     if(!v('name')){setInvalid('name',true);ok=false;}
-    if(!v('ig')){setInvalid('ig',true);ok=false;}
     if(!v('line')){setInvalid('line',true);ok=false;}
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v('email'))){setInvalid('email',true);ok=false;}
     if(!/^\d{5}$/.test(v('last5'))){setInvalid('last5',true);ok=false;}
@@ -428,7 +420,7 @@
     }, 800);
   });
 
-  /* 表單送出事件 */
+  /* 表單送出事件 (傳送資料已同步移除 ig) */
   $('submitBtn').addEventListener('click', async ()=>{
     if(!validate()){
       document.querySelector('.field.invalid')?.scrollIntoView({behavior:'smooth',block:'center'});
@@ -441,7 +433,6 @@
 
     const payload={
       name: registeredName,
-      ig:$('ig').value.trim(),
       line:$('line').value.trim(),
       email:$('email').value.trim(),
       last5:$('last5').value.trim(),
