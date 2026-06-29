@@ -416,15 +416,16 @@ const ENDPOINT = "https://script.google.com/macros/s/AKfycbwE-jXSNNhBJavFDgzAjNj
       return;
     }
 
-    try{
-      await fetch(ENDPOINT,{
-        method:'POST',
-        mode:'no-cors',
-        headers:{'Content-Type':'text/plain;charset=utf-8'},
-        body:JSON.stringify(payload)
-      });
-      showDone();
-    }catch(err){
+try {
+  // 將資料包裝成標準表單格式發送，最不會被 Google 阻擋
+  await fetch(ENDPOINT, {
+    method: 'POST',
+    mode: 'cors', 
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(payload)
+  });
+  showDone();
+}catch(err){
       btn.disabled=false; btn.textContent='送出報名 · 展開座標旅程';
       alert('送出時連線出了點狀況，請稍後再試一次，或直接私訊我們 ♡');
     }
